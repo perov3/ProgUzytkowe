@@ -1,0 +1,70 @@
+\documentclass[12pt, letterpaper, titlepage]{article}
+\usepackage[left=3.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[MeX]{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{amsmath} %pakiet matematyczny
+\usepackage{amssymb} %pakiet dodatkowych symboli
+\title{Pierwszy dokument LaTeX}
+\author{Patryk Śmiłek}
+\date{Październik 2022}
+\begin{document}
+\maketitle
+
+
+
+
+\begin{table}[h]
+\centering\caption{Przykładowy system decyzyjny}
+\centering
+\begin{tabular}{c|c c c}
+\hline
+\hline
+Pacjent & Ból brzucha & Temperatura ciała & Operacja\\
+\hline
+u1 & mocny & wysoka & tak\\
+u2 & średni & wysoka & tak\\
+u3 & mocny & średnia & tak\\
+u4 & mocny & niska & tak\\
+u5 & średni & średnia & tak\\
+u6 & średnia & średnia & nie \\
+u7 & mały & wysoka & nie \\
+u8 & mały & niska & nie\\
+u9 & mocny& niska & nie\\
+u10 & mały& średnia & nie\\
+\hline
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering\caption{ tabela przedstawiające działania bramek logicznych:AND, NAND, OR, NOR,
+XOR}
+\centering
+\begin{tabular}{|c c|c|c|c|c|c|}
+\hline
+A & B & AND & NAND & OR & NOR & XOR\\
+\hline
+0 & 0 & 0 & 1 & 0 & 1 & 0\\
+0 & 1 & 0 & 1 & 1 & 0 & 1\\
+1 & 0 & 0 & 1 & 1 & 0 & 1\\
+1 & 1 & 1 & 0 & 1 & 0 & 0\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering\caption{ tabela przedstawiające działanie bramki logicznej: NOT}
+\centering
+\begin{tabular}{|c|c| }
+\hline
+A & NOT \\
+0 & 1\\
+1 & 0\\
+\hline
+\end{tabular}
+\end{table}
+
+
+\end{document}
