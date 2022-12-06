@@ -1,0 +1,132 @@
+\documentclass[12pt, letterpaper, titlepage]{article}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[MeX]{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{amsmath} %pakiet matematyczny
+\usepackage{amssymb} %pakiet dodatkowych symboli
+\title{Kolokwium pierwsze}
+\author{Patryk Śmiłek}
+\date{06.12.2022}
+\begin{document}
+\maketitle
+\section{Szyfr AES}
+Standard  AES  (Advanced  Encryption  Standard)  opublikowany  został  przez  NIST  w  2001
+roku. AES  jest  szyfrem  blokowym,  zaprojektowanym  w  celu  zastąpienia  szyfru  DES  jako
+przyjęty  standard  w  różnorodnych  zastosowaniach.  W  porównaniu  z  szyframi  z  kluczami
+publicznymi - jak RSA, AES (jak zresztą większość szyfrów symetrycznych) jest nieporów-
+nanie bardziej skomplikowany i nie da się wyjaśnić tak prosto jak wiele innych algorytmów
+kryptograficznych. Względna prostota tej wersji umożliwia ręczne wykonywanie szyfrowania
+i deszyfracji, dzięki czemu łatwiej można zrozumieć detale pełnego algorytmu AES [1].
+\subsection{Arytmetyka ciał skończonych}
+W Algorytmie AES wszystkie obliczenia wykonywane są na 8-bitowych bajtach, dodawanie,
+mnożenie i dzielenie wykonywane są w ciele skończonym GF(28). Mówiąc skrótowo, ciało to
+zbiór, w którym dodawanie, odejmowanie, mnożenie i dzielenie są działaniami wewnętrznymi:
+wynik dowolnej z tych operacji wykonanej na elementach zbioru również należy do tego zbio-
+ru. Dzielenie definiowane jest jako mnożenie przez element odwrotny: a/b oznacza to samo,
+co a(b-1).\\
+
+\noindent Wszystkie niemal algorytmy szyfrujące, zarówno te konwencjonalne, jak i te z kluczami pu-
+blicznymi , obejmują obliczenia na liczbach całkowitych. Jeżeli jedną z operacji jest dzielenie,
+wymagana jest arytmetyka zdefiniowana nad ciałem: wykonalność dzielenia wiąże się bowiem
+z wymaganiem, by każdy nie zerowy element ciała posiadał odwrotność multiplikowaną. Ze
+względu na wygodę obliczeń oraz efektywności implementacji chcielibyśmy operować liczbami
+dającymi się zapisywać na ustalonej (n) liczbie bitów i jednocześnie w pełni wykorzystują-
+cymi zakres wartości (od 0 do 2n1) oferowanych przez tę liczbę bitów. Niestety, zbiór Z2n ze
+zwykłą arytmetyką modulo 2n nie jest ciałem, ponieważ żadna liczba parzysta nie posiada w
+tej arytmetyce odwrotności multiplikowanej nie dla każdego elementu b istnieje takie
+x, że bx mod2n=1.\\
+
+\noindent Możliwe jest jednak takie zdefiniowanie działań w zbiorzeZ2n, by stał się ciałem GF(2n).
+Rozpatrzymy zbiór S wielomianów stopnia nie wyższego niż n - 1 ze współczynnikami binar-
+nymi (czyli pochodzącymi ze zbioru{0,1}). Każdy z tych wielomianów ma postać
+
+$$f(x)=a_{n-1}x^{n-1}+a_{n-2}x^{n-2}+...+a_{1}x+a_{0}= \sum_{i=0}^{n-1} a_{i}x^{i} $$
+gdzie każde ai ma wartość 0 albo 1. W zbiorze S istnieje wówczas dokładnie 2n różnych
+wielomianów; dla n = 3 jest to 8 następujących wielomianów:
+$$
+\begin{array}{cccc}
+0 & x & x^{2} & x^{2}+x \\
+1 & x+1 & x^{2}+1 & x^{2}+x+1 \\
+\end{array}
+$$ 
+\newpage
+\noindent \textbf{Można sprawić, że zbiór S będzie ciałem skończonym, definiując odpowiednio operacje na
+jego elementach:}
+\newline
+\begin{enumerate}
+\item  Operacje te opierać się muszą generalnie na tradycyjnych regułach arytmetyki wielomianowej, jednak z zastrzeżeniami wymienionymi w punktach 2. i 3.
+\item Operacje na współczynnikach wielomianów wykonywane są modulo 2; dodawanie jest
+wówczas równoważne operacji XOR.
+\item Gdy wynikiem mnożenia wielomianów jest wielomian f(x) stopnia wyższego niż n -
+1, należy wielomian ten zredukować modulo pewien nieredukowalny wielomian m(x)
+stopnia n - czyli zamiast oryginalnego wielomianu f(x) wziąć resztę r(x) z jego dzielenia
+przez m(x), oznaczoną f(x) mod m(x). Wielomian nazywamy nieredukowalnym, jeżeli
+nie można go przedstawić w postaci iloczynu dwóch wielomianów niższych stopni.
+\end{enumerate}
+\begin{table}[h]
+\centering\caption{Parametry algorytmu AES[2]}\label{tabela 1}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Długość klucza(w słowach/bajtach/bitach) & 4/16/128 & 6/24/192 & 8/32/256 \\
+\hline
+Rozmiar bloku wejściowego (w słowach/bajtach/bitach) & 4/16/128 & 4/16/128 & 4/16/128 \\
+\hline
+Liczba rund & 10 & 12 & 14 \\
+\hline
+Długość podklucza rundy (w słowach/bajtach/bitach) & 4/16/128 & 4/16/128 & 4/16/128 \\
+\hline
+Rozmiar rozwiniętego podklucza (w słowach/bajtach) & 44/176 & 52/208 & 60/240\\
+\hline
+\end{tabular}
+\end{table}
+\newpage
+\section{Ciasto z jabłkami i żurawiną}
+Ciasto z jabłkami i żurawiną [3] to fantastyczna szarlotka dla fanów żurawiny. Połączenie
+jabłek i świeżej żurawiny jest bezbłędne. Ciasta nie trzeba chłodzić i wstępnie podpiekać,
+dlatego przygotowanie nie powinno nam zająć dużo czasu. Świeża żurawina jest obecnie w
+sezonie więc korzystajmy z tego dobrodziejstwa, choć w przepisie bez problemu i żadnych
+dodatkowych zmian można użyć żurawiny mrożonej. Polecam!\\
+\newline
+\textbf{Składniki na ciasto}
+\newline
+\begin{itemize}
+\item 300 g mąki pszennej
+\item 200 g masła
+\item 1 łyżeczka proszku do pieczenia
+\item 1 łyżeczka zmielonego cynamonu
+\item 1 duże jajko
+\item 1 żółtko, z dużego jajka
+\item 110g jasnego miałkiego brązowego cukru
+\end{itemize}
+Wszystkie składniki na ciasto umieścić w misie malaksera i zmiksować do połączenia. Otrzy-
+mane ciasto będzie bardzo gęste, wręcz „ciasteczkowo” gęste. Jeśli ciasto będzie mocno klejące
+można je schłodzić w lodówce przez około 60 minut. \\
+
+\noindent Kwadratową formę o boku 24 cm wyłożyć papierem do pieczenia, sam spód. Ciasto podzielić
+na 2 równe części. Pierwszą częścią ciasta wylepić spód formy, na nie równomiernie wyło-
+żyć nadzienie jabłkowo – żurawinowe, a na górę wyłożyć drugą część ciasta – w kawałeczkach. \\
+
+\noindent Ciasto z jabłkami i żurawiną piec w temperaturze 180ºC, najlepiej bez termoobiegu (czyli
+z grzaniem góra-dół), przez około 50 minut. Po wystudzeniu można oprószyć dodatkowym
+cukrem pudrem. \\
+\newline
+\textbf{Składniki na nadzienie jabłkowo - żurawinowe}
+\newline
+\begin{itemize}
+\item 600 g jabłek odmiany szarlotkowej
+\item 300 g żurawiny
+\item 1/4 łyżeczka cukru (lub mniej,do smaku)
+\item 1 łyżeczka zmielonego cynamonu
+\item 1 łyżeczka soku z cytryny
+\item 1 łyżka skrobi ziemniaczanej
+\end{itemize}
+\newpage
+\noindent Jabłka umyć, obrać, usunąć gniazda nasienne a następnie pokroić w półplasterki.\\
+
+\noindent Pokrojone jabłka umieścić w garnku, dodać żurawinę, cukier, cynamon i sok z cytryny, na-
+stępnie wymieszać. Pogotować przez kilka minut do wstępnego odparowania wody i popękana
+żurawiny. Następnie oprószyć przez sitko skrobią ziemniaczaną i wymieszać. Zdjąć z palnika,
+nie trzeba studzić (można gorące wyłożyć na przygotowane ciasto w formie).\\
+\end{document}
